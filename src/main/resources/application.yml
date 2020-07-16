@@ -1,2 +1,13 @@
 server:
   port: 8085
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/demoDb
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
