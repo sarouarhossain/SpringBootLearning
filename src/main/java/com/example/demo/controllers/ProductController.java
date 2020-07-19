@@ -1,32 +1,44 @@
 package com.example.demo.controllers;
 
-import com.example.demo.models.database.Product;
+import com.example.demo.models.dto.CreatedResponse;
+import com.example.demo.models.dto.ProductListResponse;
+import com.example.demo.models.dto.ProductResponse;
 import com.example.demo.models.form.NewProductForm;
-import com.example.demo.repositories.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class ProductController {
+  private ProductService productService;
 
-  @Autowired ProductRepository productRepository;
+  ProductController(ProductService productService) {
+    this.productService = productService;
+  }
 
+  /**
+   * Create product API
+   *
+   * @param productForm request body
+   * @return
+   */
   @PostMapping("/product")
-  public ResponseEntity<Object> create(@RequestBody NewProductForm productForm) {
+  public ResponseEntity<CreatedResponse> create(@RequestBody NewProductForm productForm) {
+    var response = productService.createNewProduct(productForm);
+    return new ResponseEntity<>(response, HttpStatus.CREATED);
+  }
 
-    Product product = new Product();
-    product.setName(productForm.getName());
-    product.setPrice(productForm.getPrice());
-    product.setQuantity(productForm.getQuantity());
+  @GetMapping("/product")
+  public ResponseEntity<ProductListResponse> getProducts() {
+    var response = productService.getProducts(null, null);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
 
-    var productRes = productRepository.save(product);
-
-    return new ResponseEntity<>(productRes, HttpStatus.CREATED);
+  @GetMapping("/product/{id}")
+  public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
+    var response = productService.getProduct(id);
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 }

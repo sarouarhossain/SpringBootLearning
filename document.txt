@@ -1,0 +1,21 @@
+REST CRUD API
+------------------------
+
+CRUD -> create, read, update, delete -> RESOURCE
+
+Create
+-------
+/product  -> POST -> request body [json]
+
+Read
+------
+/product/:id  -> GET -> id URL path variable
+/product?pageNo=4&&pageLimit=10  -> GET -> ALL resource, pageNo, pageLimit (Query parameter)
+
+Update
+-------
+/product/:id -> PUT -> id URL path variable -> Request body [json]
+
+Delete
+---------
+/product/:id -> DELETE -> id URL path variable
