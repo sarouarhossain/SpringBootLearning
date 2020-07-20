@@ -3,7 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.models.dto.CreatedResponse;
 import com.example.demo.models.dto.ProductListResponse;
 import com.example.demo.models.dto.ProductResponse;
+import com.example.demo.models.dto.UpdatedResponse;
 import com.example.demo.models.form.NewProductForm;
+import com.example.demo.models.form.UpdateProductForm;
 import com.example.demo.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +33,29 @@ public class ProductController {
   }
 
   @GetMapping("/product")
-  public ResponseEntity<ProductListResponse> getProducts() {
-    var response = productService.getProducts(null, null);
+  public ResponseEntity<ProductListResponse> getList(
+      @RequestParam(value = "pageNo", required = false) Integer pageNo,
+      @RequestParam(value = "pageLimit", required = false) Integer pageLimit) {
+    var response = productService.getProducts(pageNo, pageLimit);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
   @GetMapping("/product/{id}")
-  public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
+  public ResponseEntity<ProductResponse> get(@PathVariable Long id) {
     var response = productService.getProduct(id);
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @PutMapping("/product/{id}")
+  public ResponseEntity<UpdatedResponse> update(
+      @PathVariable Long id, @RequestBody UpdateProductForm productForm) {
+    var response = productService.updateProduct(id, productForm);
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @DeleteMapping("/product/{id}")
+  public ResponseEntity<Object> delete(@PathVariable Long id) {
+    productService.deleteProduct(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 }
