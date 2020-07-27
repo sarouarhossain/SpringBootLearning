@@ -35,8 +35,9 @@ public class ProductController {
   @GetMapping("/product")
   public ResponseEntity<ProductListResponse> getList(
       @RequestParam(value = "pageNo", required = false) Integer pageNo,
-      @RequestParam(value = "pageLimit", required = false) Integer pageLimit) {
-    var response = productService.getProducts(pageNo, pageLimit);
+      @RequestParam(value = "pageLimit", required = false) Integer pageLimit,
+      @RequestParam(value = "quantitityMinimum", required = false) Integer minimumQuantity) {
+    var response = productService.getProducts(pageNo, pageLimit, minimumQuantity);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 

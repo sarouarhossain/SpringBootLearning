@@ -14,7 +14,7 @@ public interface ProductService {
 
   ProductResponse getProduct(Long id);
 
-  ProductListResponse getProducts(Integer pageNumber, Integer pageLimit);
+  ProductListResponse getProducts(Integer pageNumber, Integer pageLimit, Integer minimumQuantity);
 
   void deleteProduct(Long id);
 }

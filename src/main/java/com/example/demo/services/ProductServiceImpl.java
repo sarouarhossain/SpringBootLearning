@@ -78,15 +78,27 @@ public class ProductServiceImpl implements ProductService {
   }
 
   @Override
-  public ProductListResponse getProducts(Integer pageNumber, Integer pageLimit) {
+  public ProductListResponse getProducts(
+      Integer pageNumber, Integer pageLimit, Integer minimumQuantity) {
     if (pageNumber == null && pageLimit == null) {
-      List<Product> productList = productRepository.findAll();
+      List<Product> productList;
+      if (minimumQuantity != null) {
+        productList = productRepository.getProductListByMinimumQuantity(minimumQuantity);
+      } else {
+        productList = productRepository.findAll();
+      }
       var productResponseList = convertProductListEntityToResponse(productList);
       return ProductListResponse.builder().products(productResponseList).build();
     } else {
       pageNumber = pageNumber < 1 ? 0 : pageNumber - 1;
       Pageable pageable = PageRequest.of(pageNumber, pageLimit, Sort.by("id").ascending());
-      Page<Product> productPage = productRepository.findAll(pageable);
+
+      Page<Product> productPage;
+      if (minimumQuantity != null) {
+        productPage = productRepository.getProductPageByMinimumQuantity(minimumQuantity, pageable);
+      } else {
+        productPage = productRepository.findAll(pageable);
+      }
       List<Product> productList = productPage.stream().collect(Collectors.toList());
       long totalData = productPage.getTotalElements();
       long totalPages = productPage.getTotalPages();
