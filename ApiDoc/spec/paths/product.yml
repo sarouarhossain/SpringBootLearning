@@ -1,0 +1,41 @@
+get:
+  summary: get product list
+  tags: 
+    - 01-Product
+  parameters:
+    - in: query
+      name: pageNo
+      required: false
+      schema:
+        type: integer
+      description: indicates the page number
+    - in: query
+      name: pageLimit
+      required: false
+      schema:
+        type: integer
+      description: indicates number of products per page
+    - in: query
+      name: quantityMinimum
+      required: false
+      schema:
+        type: integer
+      description: test test
+  responses:
+    200:
+      description: OK
+      content:
+        application/json:
+          schema:
+            description: list of products
+            type: array
+            items:
+              type: object
+              properties:
+                name:
+                  type: string
+                quantity:
+                  type: integer
+                price:
+                  type: float
+                    

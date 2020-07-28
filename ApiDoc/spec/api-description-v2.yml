@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: demo application API DOC
+  description: |-
+    # ....... description.......
+    ## http status
+    200 -> OK
+    400 -> input parameter wrong
+    500 -> internal server error
+
+servers:
+  - url: 'http://localhost:8080'
+    description: localhost
+
+tags:
+  - name: 01-Product
+
+paths:
+  /api/v1/product:
+    $ref: ./paths/product.yml

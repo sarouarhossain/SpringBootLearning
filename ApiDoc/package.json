@@ -1,0 +1,21 @@
+{
+  "name": "test-apidoc",
+  "version": "1.0.0",
+  "description": "api documentation",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "redoc-cli": "^0.9.7"
+  },
+  "devDependencies": {
+    "redoc-cli": "^0.9.7"
+  },
+  "scripts": {
+    "serve": "redoc-cli serve ./spec/api-description-v2.yml --options.expandResponse=all --options.pathInMiddlePanel --options.noAutoAuth --watch --port 9090",
+    "bundle": "redoc-cli bundle ./spec/api-description-v2.yml --options.expandResponse=all --options.pathInMiddlePanel --options.noAutoAuth --output ./docs/index.html"
+  },
+  "author": "testtest",
+  "license": "ISC"
+}
